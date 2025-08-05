@@ -1,0 +1,17 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# PHP
+vendor/
+.env
+
+# Python
+*.pyc
+__pycache__/
+
+# Logs
+*.log
+
+# Database dumps
+*.sql
