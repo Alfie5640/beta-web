@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    margin: 0 auto;
+    max-width: 1280px;
+    display:flex;
+    flex-direction:column;
+    height:100%;
+}
+
+.login-form {
+    border: 2.5px solid black;
+    padding:20px;
+    width: 100%;
+}
+
+#login-box {
+    border: 2.5px solid green;
+    width: 100%;
+    height: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centers login-form inside login-box */
+    align-items: center;     /* centers login-form inside login-box */
+}
+
+#maincontent {
+    height:100%;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border: 2.5px solid red;
+}
+
+#error {
+    width:100%;
+    border:2.5px solid blue;
+}
+
+h1 {
+    align-self: flex-start;
+    margin-bottom:0;
+}
+
+p {
+    font-size: 25px;
+}
