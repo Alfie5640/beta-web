@@ -18,7 +18,7 @@
 <body>
     <script src=""></script>
     <div id="maincontent">
-        <h1>Login</h1>
+        <h1>LOGIN</h1>
         <br>
         <div id="login-box">
 
@@ -27,23 +27,30 @@
 
                 <form action="login.php" method="post">
 
+                    <div class="inputWrapper">
+                        <p>Username:</p>
+                        <input name="username" type="text" placeholder="Enter username" required />
+                    </div>
 
-                    <p>Username: </p>
-                    <input name="username" type="text" placeholder="Enter username" required />
+                    <div class="inputWrapper">
+                        <p>Password:</p>
+                        <input name="password" type="password" placeholder="Enter password" required>
+                    </div>
 
-                    <p>Password: </p>
-                    <input name="password " type="password" placeholder="Enter password" required>
-
-                    <input type="submit" value="Login">
-
+                    <div class="submitWrapper">
+                        <p></p>
+                        <input type="submit" value="Login" class="submitButton">
+                    </div>
                 </form>
-
-            </div>
-            <div id="error">
-                <!-- form processing php here -->
-                <p>Example error message</p>
+                <div id="registerBox">
+                    <a href="register.php"><p id="register">Not registered? Create account here...</p></a>
+                </div>
             </div>
         </div>
+        <div id="error">
+                <!-- form processing php here -->
+                <p>error message</p>
+            </div>
     </div>
 </body>
 
