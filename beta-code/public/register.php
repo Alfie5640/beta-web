@@ -55,16 +55,16 @@
             <div class="login-form">
                 <!-- login form -->
 
-                <form action="register.php" method="post">
+                <form method="post" id="registerForm">
 
                     <div class="inputWrapper">
                         <p>Username:</p>
-                        <input name="username" type="text" placeholder="Enter username" required />
+                        <input id="username" type="text" placeholder="Enter username" required />
                     </div>
 
                     <div class="inputWrapper">
                         <p>Password:</p>
-                        <input name="password" type="password" placeholder="Enter password" required>
+                        <input id="password" type="password" placeholder="Enter password" required>
                     </div>
 
                     <div class="inputWrapper" id="radio">
@@ -89,22 +89,7 @@
             </div>
         </div>
         <div id="error">
-            <!-- form processing php here -->
-            <?php
-            
-                if($_SERVER["REQUEST_METHOD"] == "POST") {
-                    
-                    sanitiseInputs();
-                    
-                    if ($_SESSION['errorMessage'] == "") {
-                        addUser($link, trim($_POST['username']), $_POST['password'], $_POST['role']);
-                    } else {
-                        echo $_SESSION['errorMessage'];
-                    }
-                }
-            
-            ?>
-            <p>error message</p>
+            <script src="js/register.js"></script>
         </div>
     </div>
 </body>

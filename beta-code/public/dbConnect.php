@@ -6,9 +6,7 @@
 
     if (!$link) {
         die('Connection Issue Present');
-    } else {
-    echo "Connected to database successfully<br>";
-}
+    }
 
 //Otherwise success - database commands can be processed
 
