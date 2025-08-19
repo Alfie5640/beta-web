@@ -3,6 +3,7 @@
 
     function sanitiseInputs($username, $pass) {
         global $response;
+        
         if($username != filter_var($username, @FILTER_SANITIZE_STRING)) {
             http_response_code(400); // Bad Request
             $response['message'] = "Non-conforming characters in the username field. Please review and re-enter this field";
@@ -25,9 +26,17 @@
         global $response;
         $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
         
-        $sql = "INSERT INTO EndUser (username, `role`, password_hash) VALUES ('$username', '$role', '$hashedPass');";
+        $stmt = mysqli_prepare($link, "INSERT INTO EndUser (username, `role`, password_hash) VALUES (?,?,?)");
+        if ($stmt === false) {
+            http_response_code(500);
+            $response['message'] = 'DB error ';
+            return;
+        }
         
-        if (!mysqli_query($link, $sql)) {
+        mysqli_stmt_bind_param($stmt, "sss", $username, $role, $hashedPass);
+        
+        
+        if (!mysqli_stmt_execute($stmt)) {
             http_response_code(500); // Internal Server Error
             $response['message'] = "DB Error";
         } else {
@@ -36,10 +45,9 @@
             $response['message'] = "User registered successfully";
             
         }
+        
+        mysqli_stmt_close($stmt);
     }
-
-
-//---------------------------------
 
 
     header('Content-Type: application/json'); // Always return JSON
