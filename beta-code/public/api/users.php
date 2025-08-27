@@ -54,7 +54,7 @@
     header('Access-Control-Allow-Origin: *'); // Adjust for your frontend domain
     header('Access-Control-Allow-Methods: POST');
 
-// Get the raw POST body (JSON)
+// Get the raw POST body (JSON) &  REGISTERS USERS, 
     $data = json_decode(file_get_contents('php://input'), true);
 
     $response = ['success' => false, 'message' => ''];
@@ -65,7 +65,6 @@
     $pass = $data['password'];
 
     sanitiseInputs($username, $pass);
-
     addUser($link, $username, $pass, $role);
 
     echo(json_encode($response));

@@ -1,6 +1,4 @@
 <?php
-    session_start();
-
     include('../dbConnect.php');
 
     function sanitiseInputs($username, $pass) {

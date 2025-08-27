@@ -1,10 +1,3 @@
-<?php
-
-//php functions instantiated 
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,6 +48,8 @@
         <div id="error">
             <!-- form processing php here -->
             <script src="js/login.js"></script>
+        </div>
+        <div id="tokenDisplay">
         </div>
     </div>
 </body>

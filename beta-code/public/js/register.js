@@ -6,7 +6,7 @@ document.getElementById('registerForm').addEventListener("submit", async functio
     const role = document.querySelector("input[name='role']:checked").value;
     
     try {
-        const response = await fetch("api/registerapi.php", {
+        const response = await fetch("api/users.php", {
             method: "POST",
             headers: {
                 "Content-type": "application/json"

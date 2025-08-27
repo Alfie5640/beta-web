@@ -21,10 +21,14 @@ document.getElementById("LoginForm").addEventListener("submit", async function (
 
         // Handle backend response
         const resultDiv = document.getElementById("error");
-        if (data.success) {
+        if (data.success && data.token) {
+        
+            //Store JWT. [NOTE dont store in local storage normally as vulnerable to xss]
+            localStorage.setItem("jwt", data.token);
+            
             // Redirect to corresponding home page
             if (data.role == "climber") {
-            window.location.href = "../climberHome.php";
+                window.location.href = "../climberHome.php";
             } else {
                 window.location.href = "../instructorHome.php";
             }
