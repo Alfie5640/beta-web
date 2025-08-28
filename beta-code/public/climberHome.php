@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
 <head>
@@ -10,9 +9,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/home.css">
-    
-    <script src="js/profileInfo.js"></script>
-    
+    <script>
+        const token = localStorage.getItem("jwt");
+
+        fetch("api/decode.php", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    token
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('username').textContent = `${data.username}`;
+                    document.getElementById('role').textContent = `${data.role}`;
+                } else {
+                    document.getElementById('role').textContent = data.message;
+                }
+            });
+
+    </script>
+
 </head>
 
 <body>
@@ -20,10 +40,13 @@
         <!-- Note that we dont include header.php as this home page is unique -->
         <div id="profile">
         </div>
-        <h1>Username</h1>
-        <h1>Climber</h1>
+        <h1>
+            <div id="username"></div>
+        </h1>
+        <h1>
+            <div id="role"></div>
+        </h1>
     </div>
-
 
     <div class="maincontent">
 
@@ -41,8 +64,8 @@
                 <button class="button_links" onclick="window.location.href='library.php'">LIBRARY</button>
             </div>
         </div>
-        
-        
+
+
         <div class="liked_videos" style="display:flex; justify-content:center; align-items: center;">
             <h1>FAVOURITED VIDEOS</h1>
         </div>

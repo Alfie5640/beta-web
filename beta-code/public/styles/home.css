@@ -6,6 +6,10 @@ html, body {
     background-color: #F2F2F2;
 }
 
+#username {
+    margin-right: 30px;
+}
+
 h1 {
     margin-left: 18px;
     font-family: "Bebas Neue", sans-serif;
