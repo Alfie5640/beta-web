@@ -49,8 +49,6 @@
             <!-- form processing php here -->
             <script src="js/login.js"></script>
         </div>
-        <div id="tokenDisplay">
-        </div>
     </div>
 </body>
 

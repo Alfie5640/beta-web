@@ -61,7 +61,7 @@
             <div class="links">
                 <button class="button_links" onclick="window.location.href='createSession.php'">CREATE SESSION</button>
                 <button class="button_links" onclick="window.location.href='studentList.php'">STUDENT LIST</button>
-                <button class="button_links" onclick="window.location.href='studentList.php'">ADD STUDENT</button>
+                <button class="button_links" onclick="window.location.href='addStudent.php'">ADD STUDENT</button>
             </div>
         </div>
 
