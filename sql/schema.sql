@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 06, 2025 at 09:36 PM
+-- Generation Time: Sep 10, 2025 at 10:40 AM
 -- Server version: 11.8.1-MariaDB-4
 -- PHP Version: 8.4.6
 
@@ -61,6 +61,18 @@ CREATE TABLE `ClimberProfile` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `climber_instructors`
+--
+
+CREATE TABLE `climber_instructors` (
+  `id` int(11) NOT NULL,
+  `instructorId` int(11) NOT NULL,
+  `climberId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Comments`
 --
 
@@ -85,6 +97,16 @@ CREATE TABLE `EndUser` (
   `role` enum('climber','instructor') NOT NULL,
   `password_hash` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+
+--
+-- Dumping data for table `EndUser`
+--
+
+INSERT INTO `EndUser` (`userId`, `username`, `role`, `password_hash`) VALUES
+(4, 'swalker', 'climber', '$2y$12$tgRq6mqWZB3NeCNM5hQ4MeejTS7oAqulGYH6XBNVdcoYFqTNV/gNW'),
+(6, 'ejackson', 'climber', '$2y$12$SxrtiJ.0Yp7iBu1vDobGnuwXFe6QTJRc5Hje8neQQrZtI07S/cNhK'),
+(13, 'hwalker', 'instructor', '$2y$12$fBW8PGUL2WcltHnABRJwZ.9kL6pHpe5AEXjgTK8DDsvUoQKdTU2OC'),
+(14, 'awalker', 'climber', '$2y$12$HomAUM/jAumN8YlONOBA5eWIPdVPMm2oXHv8dyHultM8e86LM7CP.');
 
 -- --------------------------------------------------------
 
@@ -166,6 +188,14 @@ ALTER TABLE `ClimberProfile`
   ADD PRIMARY KEY (`userId`);
 
 --
+-- Indexes for table `climber_instructors`
+--
+ALTER TABLE `climber_instructors`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `instructorId` (`instructorId`),
+  ADD KEY `climberId` (`climberId`);
+
+--
 -- Indexes for table `Comments`
 --
 ALTER TABLE `Comments`
@@ -225,6 +255,12 @@ ALTER TABLE `CalendarEntry`
   MODIFY `entryId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `climber_instructors`
+--
+ALTER TABLE `climber_instructors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `Comments`
 --
 ALTER TABLE `Comments`
@@ -234,7 +270,7 @@ ALTER TABLE `Comments`
 -- AUTO_INCREMENT for table `EndUser`
 --
 ALTER TABLE `EndUser`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `Labels`
@@ -269,6 +305,13 @@ ALTER TABLE `CalendarEntry`
 --
 ALTER TABLE `ClimberProfile`
   ADD CONSTRAINT `ClimberProfile_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `EndUser` (`userId`);
+
+--
+-- Constraints for table `climber_instructors`
+--
+ALTER TABLE `climber_instructors`
+  ADD CONSTRAINT `climber_instructors_ibfk_1` FOREIGN KEY (`instructorId`) REFERENCES `InstructorProfile` (`userId`),
+  ADD CONSTRAINT `climber_instructors_ibfk_2` FOREIGN KEY (`climberId`) REFERENCES `ClimberProfile` (`userId`);
 
 --
 -- Constraints for table `Comments`
