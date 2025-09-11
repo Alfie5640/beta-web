@@ -13,7 +13,7 @@ include('../dbConnect.php');
     } 
 }
 
-function AddClimber($response, $climberToAdd) {
+function AddClimber($response, $climberToAdd, $climberId) {
     
 }
 
@@ -50,8 +50,9 @@ if ($payload) {
 
 //Verifies/sanitises inputs and inserts data in database
 $climberToAdd = $data['climberName'];
+$climberId = $payload['id'];
 
 sanitiseInputs($response, $climberToAdd);
-AddClimber($response, $climberToAdd);
+AddClimber($response, $climberToAdd, $climberId);
 
 ?>

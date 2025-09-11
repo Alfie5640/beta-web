@@ -45,10 +45,11 @@
     }
 
 
-    function createjwt($username, $role, $secret) {
+    function createjwt($id, $username, $role, $secret) {
     global $response;
 
     $payload = [
+        "id" => $id,
         "username" => $username,
         "role" => $role,
         "iat" => time(),            // issued at
@@ -64,7 +65,7 @@
     function authenticateUser($link, $username, $pass, $secret) {
         global $response;
         
-        $stmt = mysqli_prepare($link, "SELECT role, password_hash FROM EndUser WHERE username = ?");
+        $stmt = mysqli_prepare($link, "SELECT userId, role, password_hash FROM EndUser WHERE username = ?");
         if ($stmt === false) {
             http_response_code(500);
             $response['message'] = "DB Error";
@@ -76,7 +77,7 @@
         
         mysqli_stmt_bind_param($stmt, 's', $username);
         mysqli_stmt_execute($stmt);
-        mysqli_stmt_bind_result($stmt, $role, $storedPass);
+        mysqli_stmt_bind_result($stmt, $id, $role, $storedPass);
         
         
         if(mysqli_stmt_fetch($stmt)) {
@@ -87,7 +88,7 @@
                 $response['message'] = "Successful login";
                 $response['role'] = $role;
                 
-                createjwt($username, $role, $secret);
+                createjwt($id, $username, $role, $secret);
                 
             } else {
                 http_response_code(401);

@@ -11,7 +11,7 @@ header('Content-Type: application/json'); // Always return JSON
 
 // Read raw POST data
 $data = json_decode(file_get_contents('php://input'), true);
-$response = ['success' => false, 'message' => '', 'username' => '', 'role' => ''];
+$response = ['success' => false, 'id'=>'', 'message' => '', 'username' => '', 'role' => ''];
 
 if (!isset($data['token'])) {
     $response['message'] = 'No token provided';
