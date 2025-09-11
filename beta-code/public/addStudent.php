@@ -67,7 +67,7 @@
         
         <div id="error">
             <!-- form processing php here -->
-            <script src="js/login.js"></script>
+            <script src="js/addClimb.js"></script>
         </div>
         
     </div>
