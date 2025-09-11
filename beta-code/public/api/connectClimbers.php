@@ -3,7 +3,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/auth.php';
 include('../dbConnect.php');
 
- function sanitiseInputs($response, $climberToAdd) {
+ function sanitiseInputs(&$response, $climberToAdd) {
     if($climberToAdd != filter_var($climberToAdd, @FILTER_SANITIZE_STRING)) {
         http_response_code(400); // Bad Request
         $response['message'] = "Non-conforming characters in the username field. Please review and re-enter this field";
@@ -13,8 +13,51 @@ include('../dbConnect.php');
     } 
 }
 
-function AddClimber($response, $climberToAdd, $climberId) {
+function lookUpId(&$response, $link, $climberToAdd) {
+    $stmt = mysqli_prepare($link, "SELECT userId FROM EndUser WHERE username = ?");
     
+    if($stmt === false) {
+        http_response_code(500);
+        $response['message'] = "DB Error";
+        echo json_encode($response);
+        exit;
+    }
+    
+    mysqli_stmt_bind_param($stmt, 's', $climberToAdd);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $climberId);
+    
+    if (!mysqli_stmt_fetch($stmt)) {
+        http_response_code(404);
+        $response['message'] = "Climber not found";
+        echo json_encode($response);
+        exit;
+    }
+    
+    mysqli_stmt_close($stmt);
+    return $climberId;
+}
+
+function AddClimber(&$response, $link, $climberId, $userId) {
+    $stmt = mysqli_prepare($link, "INSERT INTO climber_instructors (instructorId, climberId) VALUES (?,?)");
+    
+    if ($stmt === false) {
+        http_response_code(500);
+        $response['message'] = "DB error";
+        return;
+    }
+    
+    mysqli_stmt_bind_param($stmt, 'ii', $userId, $climberId);
+        
+    if (mysqli_stmt_execute($stmt)) {
+        $response['message'] = "Climber added successfully";
+        $response['success'] = true;
+    } else {
+            http_response_code(500);
+            $response['message'] = "DB Error: Failed to execute statement";
+        }
+
+        mysqli_stmt_close($stmt);
 }
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . "/..");
@@ -24,19 +67,26 @@ $secret = $_ENV['JWT_SECRET'];
 header('Content-Type: application/json'); // Always return JSON
 header('Access-Control-Allow-Origin: *'); 
 header('Access-Control-Allow-Methods: POST');
-    
-$data = json_decode(file_get_contents('php://input'), true);
+
 $response = ['success' => false, 'message' => ''];
 
-if (!isset($data['token'])) {
+$headers = getallheaders();
+$token = null;
+
+if (isset($headers['Authorization']) && preg_match('/Bearer\s(\S+)/', $headers['Authorization'], $matches)) {
+    $token = $matches[1];
+}
+
+if (!$token) {
     $response['message'] = 'No token provided';
     echo json_encode($response);
     exit;
 }
 
-//Verifies the JWT
+    
+$data = json_decode(file_get_contents('php://input'), true);
 
-$token = $data['token'];
+//Verifies the JWT
 $payload = verifyJWT($token, $secret);
 
 
@@ -50,9 +100,14 @@ if ($payload) {
 
 //Verifies/sanitises inputs and inserts data in database
 $climberToAdd = $data['climberName'];
-$climberId = $payload['id'];
+$userId = $payload['id'];
 
 sanitiseInputs($response, $climberToAdd);
-AddClimber($response, $climberToAdd, $climberId);
+
+$climberId = lookUpId($response, $link , $climberToAdd);
+
+AddClimber($response, $link, $climberId, $userId);
+
+echo(json_encode($response));
 
 ?>

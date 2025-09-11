@@ -64,10 +64,9 @@
                 
             </form> 
         </div>
-        
+        <script src="js/addClimb.js"></script>
         <div id="error">
             <!-- form processing php here -->
-            <script src="js/addClimb.js"></script>
         </div>
         
     </div>

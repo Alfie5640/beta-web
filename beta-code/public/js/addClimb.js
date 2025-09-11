@@ -21,6 +21,14 @@ document.getElementById("addForm").addEventListener("submit", async function (e)
         const data = await response.json();
         
         //Handle data returned
+        const resultDiv = document.getElementById("error");
+        if(data.success) {
+            resultDiv.textContent = data.message;
+            resultDiv.style.color = "green";
+        } else {
+            resultDiv.textContent = data.message;
+            resultDiv.style.color = "red";
+        }
         
     } catch (err) {
         console.error("Fetch error:", err);

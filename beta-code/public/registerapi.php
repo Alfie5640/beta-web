@@ -23,16 +23,26 @@
         global $response;
         $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
         
-        $sql = "INSERT INTO EndUser (username, `role`, password_hash) VALUES ('$username', '$role', '$hashedPass');";
-        
-        if (!mysqli_query($link, $sql)) {
+        $stmt = mysqli_prepare($link, "INSERT INTO EndUser (username, `role`, password_hash) VALUES (?, ?, ?);");
+        //username role hashedpass
+        if ($stmt === false) {
+            http_response_code(500);
             $response['message'] = "DB Error";
-        } else {
+            return;
+        }
+        
+        mysqli_stmt_bind_param($stmt, 'sss', $username, $role, $hashedPass);
+
+        if (mysqli_stmt_execute($stmt)) {
             $response['success'] = true;
             $response['message'] = "User registered successfully";
-            
+        } else {
+            http_response_code(500);
+            $response['message'] = "DB Error: Failed to execute statement";
         }
-    }
+
+        mysqli_stmt_close($stmt);
+}
 
 
 //---------------------------------
