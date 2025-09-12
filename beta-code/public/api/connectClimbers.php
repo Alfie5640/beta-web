@@ -13,6 +13,29 @@ include('../dbConnect.php');
     } 
 }
 
+
+function checkExists(&$response, $link, $climberId, $userId) {
+    $stmt = mysqli_prepare($link, "SELECT 1 FROM climber_instructors WHERE climberId = ? AND instructorId = ?");
+    
+    if($stmt === false) {
+        http_response_code(500);
+        $response['message'] = "DB Error";
+        echo json_encode($response);
+        exit;
+    }
+    
+    mysqli_stmt_bind_param($stmt, 'ii', $climberId, $userId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
+
+    $exists = mysqli_stmt_num_rows($stmt) > 0;
+
+    mysqli_stmt_close($stmt);
+    return $exists;
+}
+
+
+
 function lookUpId(&$response, $link, $climberToAdd) {
     $stmt = mysqli_prepare($link, "SELECT userId FROM EndUser WHERE username = ?");
     
@@ -46,7 +69,6 @@ function AddClimber(&$response, $link, $climberId, $userId) {
         $response['message'] = "DB error";
         return;
     }
-    
     mysqli_stmt_bind_param($stmt, 'ii', $userId, $climberId);
         
     if (mysqli_stmt_execute($stmt)) {
@@ -106,8 +128,13 @@ sanitiseInputs($response, $climberToAdd);
 
 $climberId = lookUpId($response, $link , $climberToAdd);
 
-AddClimber($response, $link, $climberId, $userId);
+$alreadyExists = checkExists($response, $link, $climberId, $userId);
 
+if (!$alreadyExists) {
+    AddClimber($response, $link, $climberId, $userId);
+} else {
+    $response['message'] = "Username already connected to current instructor";
+}
 echo(json_encode($response));
 
 ?>
