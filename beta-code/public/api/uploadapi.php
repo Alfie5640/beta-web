@@ -5,9 +5,25 @@
     
     //functions here  ------------
 
+    //Sanitise grade and title
 
-
-
+        function sanitiseInputs($grade, $title, &$response) {
+        if($grade != filter_var($grade, @FILTER_SANITIZE_STRING)) {
+            http_response_code(400); // Bad Request
+            $response['message'] = "Non-conforming characters in the grade field. Please review and re-enter this field";
+            $response['success'] = false;
+            echo(json_encode($response));
+            exit;
+        } else {
+            if($title != filter_var($title, @FILTER_SANITIZE_STRING)) {
+                http_response_code(400); // Bad Request
+                $response['message'] = "Non-conforming characters in the title field. Please review and re-enter this field";
+                $response['success'] = false;
+                echo(json_encode($response));
+                exit;
+            }
+        }
+        }
 
     
     //----------------------------
@@ -59,6 +75,9 @@
     $privacy = $_POST['privacy'] ?? null;
     $grade = $_POST['videoGrade'] ?? null;
     $date = date("Y-m-d");
+
+
+    sanitiseInputs($grade, $title, $response);
 
     
     $targetDir = __DIR__ . "/../uploads/";
