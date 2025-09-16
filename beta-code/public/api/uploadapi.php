@@ -69,7 +69,7 @@
     $filePath = "uploads/" . $filename;
 
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
-        $stmt = mysqli_prepare($link, "INSERT INTO Videos (userId, title, grade, filepath, privacy, upload_date) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt = mysqli_prepare($link, "INSERT INTO Videos (userId, title, grade, file_path, privacy, upload_date) VALUES (?, ?, ?, ?, ?, ?)");
     
         if ($stmt) {
             mysqli_stmt_bind_param($stmt, 'isssss', $userId, $title, $grade, $filePath, $privacy, $date);
