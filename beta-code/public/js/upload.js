@@ -12,29 +12,36 @@ fileInput.addEventListener("change", function () {
     }
 });
 
-document.getElementById("addForm").addEventListener("submit", async function (e) {
+document.getElementById("uploadForm").addEventListener("submit", async function (e) {
     e.preventDefault();
     
-    const video = document.getElementById("fileToUpload").value;
+    const form = document.getElementById("uploadForm");
+    const formData = new FormData(form);
+    
     const token = localStorage.getItem("jwt");
     
     
     
     try {
-        const response = await fetch("api/connectClimbers.php", {
+        const response = await fetch("api/uploadapi.php", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({
-                video: video,
-            })
+            body: formData
         });
         
         const data = await response.json();
         
         //Handle data returned
+        const resultDiv = document.getElementById("error");
+        if(data.success) {
+            resultDiv.textContent = data.message;
+            resultDiv.style.color = "green";
+        } else {
+            resultDiv.textContent = data.message;
+            resultDiv.style.color = "red";
+        }
         
     } catch (err) {
         console.error("Fetch error:", err);

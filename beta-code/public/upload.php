@@ -1,3 +1,8 @@
+<?php
+echo ini_get('upload_max_filesize');
+echo ini_get('post_max_size');
+?>
+
 <!DOCTYPE html>
 <html lang="">
 
@@ -60,27 +65,38 @@
             <form action="upload.php" method="post" enctype="multipart/form-data" id="uploadForm">
                 <h1>Select video to upload:</h1>
 
-                <input type="file" name="fileToUpload" id="fileToUpload" accept="video/*">
+                <input type="file" name="fileToUpload" id="fileToUpload" accept=".mp4,.mov,.avi,.mkv,video/*" required>
                 <label for="fileToUpload" class="custom-file-upload">Choose Video</label>
                 
                 <video id="videoPreview" width="320" height="240" controls style="display:none;"></video>
 
                 <br><br>
                 
-                <input type="submit" value="Upload" name="submit">
+                <div id="uploadDetails">
+                
+                <h1>Public</h1>
+                <input type="radio" name="privacy" value="public" required>
+                    
+                <h1>Private</h1>
+                <input type="radio" name="privacy" value="private">
+                
+                
+                <h1>Grade</h1>
+                <input type="text" name="videoGrade" required>
+                
+                
+                <h1>Title</h1>
+                <input type="text" name="videoTitle" required>
+                
+                <input type="submit" value="Upload" id="submit">
+                    
+                </div>
             </form>
 
         </div>
-
-        <div id="uploadDetails">
-
-            <form>
-            </form>
-
-        </div>
-
     </div>
-
+    <div id="error">
+    </div>
 
     <div class="footer">
         <?php
