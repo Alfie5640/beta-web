@@ -6,7 +6,7 @@ include('../dbConnect.php');
 
 function getVids(&$response, $userId, $link) {
     
-    $stmt = mysqli_prepare($link, "SELECT title, file_path FROM Videos WHERE userId = ?");
+    $stmt = mysqli_prepare($link, "SELECT title, grade, file_path FROM Videos WHERE userId = ?");
     
     if ($stmt === false) {
         http_response_code(500);
@@ -16,12 +16,14 @@ function getVids(&$response, $userId, $link) {
     
     mysqli_stmt_bind_param($stmt, 'i', $userId);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $title, $videos);
+    mysqli_stmt_bind_result($stmt, $title, $grade, $videos);
     
     $titles=[];
+    $grades=[];
     $video_paths = [];
     while (mysqli_stmt_fetch($stmt)) {
         $titles[] = $title;
+        $grades[] = $grade;
         $video_paths[] = $videos;
     }
     
@@ -29,6 +31,7 @@ function getVids(&$response, $userId, $link) {
     
     $response['success'] = true;
     $response['titles'] = $titles;
+    $response['grades'] = $grades;
     $response['videos'] = $video_paths;
 }
 
@@ -44,7 +47,7 @@ header('Access-Control-Allow-Methods: GET');
 
 
 
-$response = ['success' => false, 'message' => '', 'videos' => [], 'titles' => []];
+$response = ['success' => false, 'message' => '', 'videos' => [], 'titles' => [], 'grades' => []];
 
 $headers = getallheaders();
 $token = null;

@@ -54,8 +54,20 @@
     
     <div class="maincontent">
         <div id="filter">
-            <button class="narrowButton">FILTER</button>
-            <button class="narrowButton">SEARCH</button>
+            <select id="gradeFilter" class="narrowButton">
+                <option value="all">All</option>
+                <option value="VB">VB</option>
+                <option value="V0">V0</option>
+                <option value="V1">V1</option>
+                <option value="V2">V2</option>
+                <option value="V3">V3</option>
+                <option value="V4">V4</option>
+                <option value="V5">V5</option>
+                <option value="V6">V6</option>
+                <option value="V7">V7</option>
+                <option value="V8">V8</option>
+            </select>
+            <input type="text" id="searchFilter" class="narrowButton"/ placeholder = "SEARCH">
         </div>
         
         <div id="videoLibrary">
