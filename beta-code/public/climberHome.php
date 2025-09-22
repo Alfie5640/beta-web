@@ -62,6 +62,7 @@
                 <button class="button_links" onclick="window.location.href='upload.php'">UPLOAD</button>
                 <button class="button_links" onclick="window.location.href='calendar.php'">CALENDAR</button>
                 <button class="button_links" onclick="window.location.href='library.php'">LIBRARY</button>
+                <button class="button_links" onclick="window.location.href='search.php'">SEARCH</button>
             </div>
         </div>
 
