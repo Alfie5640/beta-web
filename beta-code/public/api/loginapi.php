@@ -109,7 +109,7 @@
     $secret = $_ENV['JWT_SECRET'];
 
     header('Content-Type: application/json'); // Always return JSON
-    header('Access-Control-Allow-Origin: *'); 
+    header('Access-Control-Allow-Origin: http://localhost:3000'); 
     header('Access-Control-Allow-Methods: POST');
 
     // Get the raw POST body (JSON)

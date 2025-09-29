@@ -4,9 +4,23 @@ require_once __DIR__ . '/auth.php';
 include('../dbConnect.php');
 
 
+function checkFavorite($link, $currentId) {
+    
+    $stmt = mysqli_prepare($link, "SELECT userId FROM Favourites WHERE videoId = ?");
+    
+    mysqli_stmt_bind_param($stmt, 'i', $currentId);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
+    
+    $favorited = mysqli_stmt_num_rows($stmt) > 0;
+    mysqli_stmt_close($stmt);
+    
+    return $favorited;
+}
+
 function getVids(&$response, $userId, $link) {
     
-    $stmt = mysqli_prepare($link, "SELECT title, grade, file_path FROM Videos WHERE userId = ?");
+    $stmt = mysqli_prepare($link, "SELECT title, grade, file_path, videoId FROM Videos WHERE userId = ?");
     
     if ($stmt === false) {
         http_response_code(500);
@@ -16,23 +30,32 @@ function getVids(&$response, $userId, $link) {
     
     mysqli_stmt_bind_param($stmt, 'i', $userId);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $title, $grade, $videos);
+    mysqli_stmt_bind_result($stmt, $title, $grade, $videos, $currentId);
     
     $titles=[];
     $grades=[];
     $video_paths = [];
+    $favorites = [];
+    $currentIds = [];
+    
     while (mysqli_stmt_fetch($stmt)) {
         $titles[] = $title;
         $grades[] = $grade;
         $video_paths[] = $videos;
+        $currentIds[] = $currentId;
     }
     
-    mysqli_stmt_close($stmt);
+    mysqli_stmt_close($stmt); //Must close statement before checking for favorites, as two prepared statements cannot be run at once
+    
+    foreach ($currentIds as $current) {
+        $favorites[] = checkFavorite($link, $current);
+    }
     
     $response['success'] = true;
     $response['titles'] = $titles;
     $response['grades'] = $grades;
     $response['videos'] = $video_paths;
+    $response['favorites'] = $favorites;
 }
 
 
@@ -47,7 +70,7 @@ header('Access-Control-Allow-Methods: GET');
 
 
 
-$response = ['success' => false, 'message' => '', 'videos' => [], 'titles' => [], 'grades' => []];
+$response = ['success' => false, 'message' => '', 'videos' => [], 'titles' => [], 'grades' => [], 'favorites' => []];
 
 $headers = getallheaders();
 $token = null;

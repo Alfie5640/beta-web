@@ -21,7 +21,8 @@ async function loadVideos() {
              allVideos = data.videos.map((path, i) => ({
                 path: path,
                 title: data.titles[i] || "Untitled",
-                grade: data.grades ? data.grades[i] : "N/A"
+                grade: data.grades ? data.grades[i] : "N/A",
+                favorite: data.favorites[i] || false
             }));
             renderVideos(allVideos);
         } else {
@@ -61,13 +62,52 @@ function renderVideos(videos) {
         videoEl.src = video.path;
         videoEl.controls = true;
         videoEl.classList.add("video-player");
-
+        
+        const favButton = document.createElement("button");
+        favButton.classList.add("favorite");
+        
+        if (video.favorite) {
+            favButton.textContent = 'Favorited';
+            favButton.disabled = true;
+        } else {
+            favButton.textContent = 'Add to Favorites';
+            favButton.addEventListener("click", () => addToFavorites(video.id, favButton) );
+        }
+        
         wrapper.appendChild(titleEl);
         wrapper.appendChild(videoEl);
+        wrapper.appendChild(favButton);
         libraryDiv.appendChild(wrapper);
     });
 }
 
+async function addToFavorites(videoId, button) {
+    try {
+        const token = localStorage.getItem("jwt");
+        const response = await fetch("api/addFavorite.php", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            
+            body: JSON.stringify({
+                videoId: videoId
+            })
+            
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            button.textContent = "Favorited";
+            button.disabled = true;
+        }
+        
+    } catch(err) {
+        console.error("Error adding favorite:", err);
+    }
+}
 
 document.getElementById("searchFilter").addEventListener("input", (e) => {
     const searchTerm = e.target.value.toLowerCase();
