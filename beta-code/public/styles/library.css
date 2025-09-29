@@ -95,3 +95,24 @@ body {height: 70%;}
 .video-player {
     height: 400px;
 }
+
+.favorite {
+    background-color: #D90166;
+    border: 0.5px solid black;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 20px;
+    width: 80%;
+    margin: 5px;
+    text-align: center;
+    border-radius: 8px;
+    color: white;
+}
+
+.favorite:hover {
+    cursor: pointer;
+    background-color: #E11584;
+}
+
+.addedFavorite {
+    background-color: #963252;
+}

@@ -22,7 +22,8 @@ async function loadVideos() {
                 path: path,
                 title: data.titles[i] || "Untitled",
                 grade: data.grades ? data.grades[i] : "N/A",
-                favorite: data.favorites[i] || false
+                favorite: data.favorites[i] || false,
+                id: data.videoIds[i]
             }));
             renderVideos(allVideos);
         } else {
@@ -67,11 +68,11 @@ function renderVideos(videos) {
         favButton.classList.add("favorite");
         
         if (video.favorite) {
-            favButton.textContent = 'Favorited';
-            favButton.disabled = true;
+            favButton.textContent = 'Unfavorite';
+            favButton.onclick = () => unfavoriteVid(video.id, favButton);
         } else {
-            favButton.textContent = 'Add to Favorites';
-            favButton.addEventListener("click", () => addToFavorites(video.id, favButton) );
+            favButton.textContent = 'Favourite ☆';
+            favButton.onclick = () => addToFavorites(video.id, favButton);
         }
         
         wrapper.appendChild(titleEl);
@@ -100,14 +101,46 @@ async function addToFavorites(videoId, button) {
         const data = await response.json();
         
         if (data.success) {
-            button.textContent = "Favorited";
-            button.disabled = true;
+            button.classList.add("addedFavorite");
+            button.textContent = "Unfavourite ★";
+            button.onclick = () => unfavoriteVid(videoId, button);
         }
         
     } catch(err) {
         console.error("Error adding favorite:", err);
     }
 }
+
+async function unfavoriteVid(videoId, button) {
+    try {
+        const token = localStorage.getItem("jwt");
+        const response = await fetch("api/unfavoriteVid.php", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            
+            body: JSON.stringify({
+                videoId: videoId
+            })
+            
+        });
+        
+        const data = await response.json();
+        
+        if(data.success) {
+            button.classList.remove("addedFavorite");
+            button.textContent = "Favorite ☆";
+            button.onclick = () => addToFavorites(videoId, button);
+            button.addEventListener("click", () => addToFavorites(videoId, button));
+        }
+        
+    } catch (err) {
+        console.error("Error adding favorite:", err);
+    }
+}
+
 
 document.getElementById("searchFilter").addEventListener("input", (e) => {
     const searchTerm = e.target.value.toLowerCase();

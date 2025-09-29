@@ -37,12 +37,14 @@ function getVids(&$response, $userId, $link) {
     $video_paths = [];
     $favorites = [];
     $currentIds = [];
+    $videoIds = [];
     
     while (mysqli_stmt_fetch($stmt)) {
         $titles[] = $title;
         $grades[] = $grade;
         $video_paths[] = $videos;
         $currentIds[] = $currentId;
+        $videoIds[] = $currentId;
     }
     
     mysqli_stmt_close($stmt); //Must close statement before checking for favorites, as two prepared statements cannot be run at once
@@ -56,6 +58,7 @@ function getVids(&$response, $userId, $link) {
     $response['grades'] = $grades;
     $response['videos'] = $video_paths;
     $response['favorites'] = $favorites;
+    $response['videoIds'] = $videoIds;
 }
 
 
@@ -70,7 +73,7 @@ header('Access-Control-Allow-Methods: GET');
 
 
 
-$response = ['success' => false, 'message' => '', 'videos' => [], 'titles' => [], 'grades' => [], 'favorites' => []];
+$response = ['success' => false, 'message' => '', 'videos' => [], 'titles' => [], 'grades' => [], 'favorites' => [], 'videoIds' => []];
 
 $headers = getallheaders();
 $token = null;
