@@ -30,11 +30,18 @@
         }
 
     </style>
+    
+    <script>
+        function logoutPage() {
+            localStorage.removeItem('jwt');
+            window.location.href = 'login.php';
+        }
+    </script>
 </head>
 
 <body>
     <div id="footer">
-        <button id="logout_button" onclick="window.location.href = 'login.php'">LOGOUT</button>
+        <button id="logout_button" onclick="logoutPage()">LOGOUT</button>
     </div>
 </body>
 
