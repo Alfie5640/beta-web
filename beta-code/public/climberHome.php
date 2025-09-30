@@ -67,8 +67,7 @@
         </div>
 
 
-        <div class="liked_videos" style="display:flex; justify-content:center; align-items: center;">
-            <h1>FAVOURITED VIDEOS</h1>
+        <div id="liked_videos" style="display:flex; justify-content:center; align-items: center;">
         </div>
     </div>
 
@@ -78,6 +77,8 @@
         include("footer.php");
             ?>
     </div>
+    
+    <script src="js/climbHome.js"></script>
 </body>
 
 </html>

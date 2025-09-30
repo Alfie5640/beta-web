@@ -4,12 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClimberHome</title>
+    <title>Instructor Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/home.css">
     <script>
+        {
         const token = localStorage.getItem("jwt");
 
         fetch("api/decode.php", {
@@ -30,7 +31,7 @@
                     document.getElementById('role').textContent = data.message;
                 }
             });
-
+        }
     </script>
 
 </head>
@@ -68,7 +69,6 @@
 
 
         <div class="liked_videos" style="display:flex; justify-content:center; align-items: center;">
-            <h1>FAVOURITED VIDEOS</h1>
         </div>
     </div>
 
