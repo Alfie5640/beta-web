@@ -68,7 +68,8 @@ function renderVideos(videos) {
         favButton.classList.add("favorite");
         
         if (video.favorite) {
-            favButton.textContent = 'Unfavorite';
+            favButton.classList.add("addedFavorite");
+            favButton.textContent = 'Unfavorite ★';
             favButton.onclick = () => unfavoriteVid(video.id, favButton);
         } else {
             favButton.textContent = 'Favourite ☆';
