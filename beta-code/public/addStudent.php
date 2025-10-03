@@ -47,6 +47,10 @@
         <h1>
             <div id="role"></div>
         </h1>
+        
+        <?php
+            include("instructorNav.php");
+        ?>
     </div>
     
     <div class="maincontent">

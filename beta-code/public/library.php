@@ -40,7 +40,6 @@
 <body>
     
     <div class="navbar">
-        <!-- Include header.php later -->
         <div id="profile">
         </div>
         <h1>
@@ -49,6 +48,10 @@
         <h1>
             <div id="role"></div>
         </h1>
+        
+        <?php
+            include("climberNav.php");
+        ?>
     </div>
     
     
