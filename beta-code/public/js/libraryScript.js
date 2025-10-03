@@ -57,8 +57,11 @@ function renderVideos(videos) {
         wrapper.classList.add("video-wrapper");
 
         const titleEl = document.createElement("h3");
-        titleEl.textContent = `${video.title}`;
-
+        const link = document.createElement("a");
+        link.href = `video.php?id=${video.id}`; //Passes the id of the selected video in the URL
+        link.textContent = video.title;
+        titleEl.appendChild(link);
+        
         const videoEl = document.createElement("video");
         videoEl.src = video.path;
         videoEl.controls = true;
