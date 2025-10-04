@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <script>
+        {
         const token = localStorage.getItem("jwt");
 
         fetch("api/decode.php", {
@@ -25,11 +26,18 @@
                 if (data.success) {
                     document.getElementById('username').textContent = `${data.username}`;
                     document.getElementById('role').textContent = `${data.role}`;
+                    
+                    if (data.role == "climber") {
+                        document.getElementById("addField").style.display = "none";
+                    } else {
+                        document.getElementById("addField").style.display = "block";
+                    }
+                    
                 } else {
                     document.getElementById('role').textContent = data.message;
                 }
             });
-
+        }
     </script>
 </head>
 
@@ -54,11 +62,17 @@
         
         <form id="searchForm" method="post">
             <!-- If role == instructor then add climber element !-->
-            <h1>Climber</h1>
-            <input type="text" name="climberName" required>
             
+            
+            <!-- In js, send climber(regardless if empty) and title to api and return the Id -> send Id in URL to video.php and if instrucot, check there and echo climber name !--> 
+            
+            <div id="addField">
+                <h1>Climber</h1>
+                <input type="text" id="climberName" required>
+            </div>
+                
             <h1>Title</h1>
-            <input type="text" name="videoTitle" required>
+            <input type="text" id="videoTitle" required>
         
             <input type="submit" value="Upload" id="submit">
         </form>
