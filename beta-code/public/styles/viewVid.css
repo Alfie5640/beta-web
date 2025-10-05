@@ -10,8 +10,8 @@ p {
 }
 
 .navbar {
-    width:100%;
-    border-bottom:2px solid black;
+    width: 100%;
+    border-bottom: 2px solid black;
     height: 15%;
     background-color: white;
     display: flex;
@@ -30,14 +30,87 @@ p {
 
 html {
     height: 100%;
-    width:100%;
+    width: 100%;
     margin: 0;
     padding: 0;
     background-color: #F2F2F2;
 }
 
+body {
+    height: 80%;
+}
+
 .maincontent {
     height: 100%;
     display: flex;
+    align-items: center;
+}
+
+#videoFormDetails {
+    width: 50%;
+    height: 100%;
+}
+
+
+#selectedVid {
+    display: flex;
+    align-items: center;
     flex-direction: column;
+    margin-left: 10px;
+    width: 50%;
+}
+
+.video-player {
+    width: 90%;
+    height: 600px;
+}
+
+
+.label-option {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 45%;
+    margin-right: 10px;
+    cursor: grab;
+    background-color: rgba(255,255,255,0.9)
+
+}
+
+.label-option:active {
+  cursor: grabbing;
+}
+
+.labelSelection {
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#comSub {
+    height: 40%;
+    margin-left: 10px;
+}
+
+#commentArea {
+    height: 80%;
+    margin: 10px;
+    width: 70%;
+}
+
+#submitButton {
+    color: white;
+    background-color: #D90166;
+    border: 0.5px solid black;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 25px;
+    border-radius: 8px;
+    margin-right: 20px;
+    height: 80%;
+    width: 20%;
+}
+
+#submitButton:hover {
+    background-color: #E11584;
+    cursor: pointer;
 }
