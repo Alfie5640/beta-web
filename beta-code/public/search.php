@@ -60,20 +60,15 @@
 
     <div class="maincontent">
         
-        <form id="searchForm" method="post">
-            <!-- If role == instructor then add climber element !-->
-            
-            
-            <!-- In js, send climber(regardless if empty) and title to api and return the Id -> send Id in URL to video.php and if instrucot, check there and echo climber name !--> 
-            
+        <form id="searchForm">           
             <div id="addField">
                 <h1>Climber</h1>
-                <input type="text" id="climberName" required>
+                <input type="text" id="climberName" name="climber">
             </div>
                 
             <h1>Title</h1>
-            <input type="text" id="videoTitle" required>
-        
+            <input type="text" id="videoTitle" name="vid" required>
+            
             <input type="submit" value="Upload" id="submit">
         </form>
     </div>
@@ -84,5 +79,7 @@
         include("footer.php");
             ?>
     </div>
+    
+    <script src="js/search.js"></script>
 </body>
 </html>

@@ -8,29 +8,26 @@ document.getElementById("searchForm").addEventListener("submit", async function 
     
     try {
         const response = await fetch("api/searchapi.php", {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
             body: JSON.stringify({
                 climberName: climberName,
-                videoTtile: videoTitle
+                videoTitle: videoTitle
             })
         });
         
         const data = await response.json();
         
-        //Handle data returned
-        if(data.success) {
-            
+        if (data.success && data.vidId) {
+            window.location.href = `video.php?id=${data.vidId}`;
         } else {
-            
+            alert(data.message || "Unable to find video.");
         }
-        
     } catch (err) {
         console.error("Fetch error:", err);
-    }
-    
-    
+        alert("Something went wrong. Please try again later.");
+  }   
 })
