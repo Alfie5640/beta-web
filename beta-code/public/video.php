@@ -28,6 +28,15 @@
                 if (data.success) {
                     document.getElementById('username').textContent = `${data.username}`;
                     document.getElementById('role').textContent = `${data.role}`;
+                    
+                    if (data.role == "climber") {
+                        document.getElementById("climberNav").style.display = "block";
+                        document.getElementById("instructorNav").style.display = "none";
+                    } else {
+                        document.getElementById("climberNav").style.display = "none";
+                        document.getElementById("instructorNav").style.display = "block";
+                    }
+                    
                 } else {
                     document.getElementById('role').textContent = data.message;
                 }
@@ -53,9 +62,12 @@
             <div id="role"></div>
         </h1>
         
-        <?php
-            include("climberNav.php");
-        ?>
+        <div id="climberNav" style="display:none;">
+            <?php include("climberNav.php"); ?>
+        </div>
+        <div id="instructorNav" style="display:none;">
+            <?php include("instructorNav.php"); ?>
+        </div>
     </div>
     
     <div class="maincontent">

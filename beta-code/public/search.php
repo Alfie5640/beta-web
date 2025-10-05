@@ -29,8 +29,12 @@
                     
                     if (data.role == "climber") {
                         document.getElementById("addField").style.display = "none";
+                        document.getElementById("climberNav").style.display = "block";
+                        document.getElementById("instructorNav").style.display = "none";
                     } else {
                         document.getElementById("addField").style.display = "block";
+                        document.getElementById("climberNav").style.display = "none";
+                        document.getElementById("instructorNav").style.display = "block";
                     }
                     
                 } else {
@@ -53,9 +57,12 @@
             <div id="role"></div>
         </h1>
         
-        <?php
-            include("climberNav.php");
-        ?>
+        <div id="climberNav" style="display:none;">
+            <?php include("climberNav.php"); ?>
+        </div>
+        <div id="instructorNav" style="display:none;">
+            <?php include("instructorNav.php"); ?>
+        </div>
     </div>
 
     <div class="maincontent">
