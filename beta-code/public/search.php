@@ -76,7 +76,7 @@
             <h1>Title</h1>
             <input type="text" id="videoTitle" name="vid" required>
             
-            <input type="submit" value="Upload" id="submit">
+            <input type="submit" value="Search" id="submit">
         </form>
     </div>
     

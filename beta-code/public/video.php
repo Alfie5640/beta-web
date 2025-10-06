@@ -78,47 +78,10 @@
         </div>
 
         <div id="videoFormDetails">
-
-            <div class="labelSelection">
-
-                <div class="label-option" draggable = true>
-                    <h1>LEFT HAND</h1>
-                </div>
-                <div class="label-option" draggable = true>
-                    <h1>RIGHT HAND</h1>
-                </div>
-
+            
+            <div id="commentsMade">
             </div>
-            <div class="labelSelection">
-                <div class="label-option" draggable = true>
-                    <h1>LEFT FOOT</h1>
-                </div>
-                <div class="label-option" draggable = true>
-                    <h1>RIGHT FOOT</h1>
-                </div>
-
-
-
-            </div>
-            <div class="labelSelection">
-                <div class="label-option" draggable = true>
-                    <h1>FLAG</h1>
-                </div>
-                <div class="label-option" draggable = true>
-                    <h1>START</h1>
-                </div>
-
-
-            </div>
-            <div class="labelSelection">
-                <div class="label-option" draggable = true>
-                    <h1>TOP</h1>
-                </div>
-                <div class="label-option" draggable = true>
-                    <h1>CUSTOM</h1>
-                </div>
-
-            </div>
+            
             <div id="comSub">
                 <input type="textarea" id="commentArea" />
                 <input type="submit" id="submitButton">

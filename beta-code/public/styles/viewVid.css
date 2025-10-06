@@ -66,30 +66,16 @@ body {
 }
 
 
-.label-option {
+#commentsMade {
+    background-color: white;
     border: 1px solid black;
-    border-radius: 5px;
-    width: 45%;
-    margin-right: 10px;
-    cursor: grab;
-    background-color: rgba(255,255,255,0.9)
-
-}
-
-.label-option:active {
-  cursor: grabbing;
-}
-
-.labelSelection {
-    height: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin: 10px;
+    height: 60%;
 }
 
 #comSub {
     height: 40%;
-    margin-left: 10px;
+    margin-left: 0px;
 }
 
 #commentArea {
@@ -113,4 +99,21 @@ body {
 #submitButton:hover {
     background-color: #E11584;
     cursor: pointer;
+}
+
+#labelSelector {
+    width: 90%;
+    height: 40px;
+}
+
+#labelSelector button {
+    width: 24%;
+    height: 100%;
+    color: white;
+    background-color: #D90166;
+    border: 1px solid black;
+}
+
+.hidden {
+    display: none;
 }
