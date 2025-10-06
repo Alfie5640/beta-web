@@ -16,6 +16,9 @@ async function loadVideo() {
         const vidDiv = document.getElementById("selectedVid");
 
         if (data.success) {
+            
+            //Load Labels HERE ------------------------------------------------------------------------
+            
             const container = document.createElement("div");
             container.id = "videoContainer";
 
@@ -31,9 +34,6 @@ async function loadVideo() {
             container.appendChild(videoEl);
             vidDiv.appendChild(container);
 
-
-
-            // Label container
             const labelContainer = document.createElement("div");
             labelContainer.id = "labelContainer";
             container.appendChild(labelContainer);
@@ -51,7 +51,6 @@ async function loadVideo() {
             container.appendChild(labelSelector);
 
             let isPausedByClick = false;
-            let clickX, clickY;
 
             videoEl.addEventListener("click", (e) => {
                 const rect = videoEl.getBoundingClientRect();
@@ -88,13 +87,32 @@ async function loadVideo() {
                 }
             });
 
-            function confirmLabel(labelType) {
-                console.log("Selected label:", labelType);
-                console.log("Timestamp:", videoEl.currentTime);
-                console.log("x:", clickX, "y:", clickY);
+            async function confirmLabel(labelType) {
+                
+                const token = localStorage.getItem("jwt");
+                const response = await fetch(`api/storeLabels.php?id=${videoId}`, {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${token}`,
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        labelType: labelType,
+                        xPos: clickX,
+                        yPos: clickY,
+                        timestamp: videoEl.currentTime,
+                    })
+                });
 
-                // TODO: store label data in database here
-
+                const data = await response.json();
+                const resultDiv = document.getElementById("commentsMade");
+                
+                if (data.success) {
+                    resultDiv.textContent = data.message;
+                } else {
+                    resultDiv.textContent = data.message;
+                }
+                
                 labelSelector.classList.add("hidden");
                 isPausedByClick = false;
                 videoEl.play();
