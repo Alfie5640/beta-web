@@ -114,6 +114,18 @@ body {
     border: 1px solid black;
 }
 
+::placeholder {
+    color: white;
+    text-align: center;
+}
+
+#labelSelector input {
+    width: 22%;
+    height: 90%;
+    color: white;
+    background-color: #D90166;
+    border: 1px solid black;
+}
 .hidden {
     display: none;
 }

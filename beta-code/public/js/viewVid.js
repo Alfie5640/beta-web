@@ -31,8 +31,8 @@ async function loadVideo() {
             container.appendChild(videoEl);
             vidDiv.appendChild(container);
 
-            
-            
+
+
             // Label container
             const labelContainer = document.createElement("div");
             labelContainer.id = "labelContainer";
@@ -46,13 +46,14 @@ async function loadVideo() {
                 <button data-type="start">Start</button>
                 <button data-type="crux">Crux</button>
                 <button data-type="top">Top</button>
-                <button data-type="custom">Custom</button>
-            `;
+                <input type="text" id="customLabelInput" placeholder="Custom" />`;
+            
             container.appendChild(labelSelector);
 
             let isPausedByClick = false;
+            let clickX, clickY;
 
-            videoEl.addEventListener("click", (e) => {  //CLICK TO PAUSE
+            videoEl.addEventListener("click", (e) => {
                 const rect = videoEl.getBoundingClientRect();
                 clickX = e.clientX - rect.left;
                 clickY = e.clientY - rect.top;
@@ -64,7 +65,7 @@ async function loadVideo() {
                 labelSelector.classList.remove("hidden");
             });
 
-            videoEl.addEventListener("play", () => { //STOP PLAYING AFTER PAUSED
+            videoEl.addEventListener("play", () => {
                 if (isPausedByClick) {
                     videoEl.pause();
                 }
@@ -72,21 +73,32 @@ async function loadVideo() {
 
             labelSelector.addEventListener("click", (e) => {
                 const labelType = e.target.getAttribute("data-type");
+
                 if (labelType) {
-                    console.log("Selected label:", labelType);
-
-                    const timestamp = videoEl.currentTime;
-                    console.log("Timestamp:", timestamp);
-                    console.log("x: ", clickX);
-                    console.log("y: ", clickY);
-
-                    // TODO: store label data in your database
-
-                    labelSelector.classList.add("hidden");
-                    isPausedByClick = false;
-                    videoEl.play();
+                    confirmLabel(labelType);
                 }
-            })
+            });
+
+            document.getElementById("customLabelInput").addEventListener("keydown", (e) => {
+                if (e.key === "Enter") {
+                    const customText = e.target.value.trim();
+                    if (customText) {
+                        confirmLabel(customText);
+                    }
+                }
+            });
+
+            function confirmLabel(labelType) {
+                console.log("Selected label:", labelType);
+                console.log("Timestamp:", videoEl.currentTime);
+                console.log("x:", clickX, "y:", clickY);
+
+                // TODO: store label data in database here
+
+                labelSelector.classList.add("hidden");
+                isPausedByClick = false;
+                videoEl.play();
+            }
         } else {
             vidDiv.textContent = "Cannot find selected video";
         }
