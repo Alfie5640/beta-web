@@ -126,6 +126,12 @@ body {
     background-color: #D90166;
     border: 1px solid black;
 }
+
+
+.video-label {
+    color: black;
+}
+
 .hidden {
     display: none;
 }
