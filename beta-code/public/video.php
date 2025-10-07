@@ -82,10 +82,10 @@
             <div id="commentsMade">
             </div>
             
-            <div id="comSub">
+            <form id="comSub">
                 <input type="textarea" id="commentArea" />
                 <input type="submit" id="submitButton">
-            </div>
+            </form>
         </div>
 
 

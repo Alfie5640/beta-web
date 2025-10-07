@@ -2,6 +2,11 @@ const params = new URLSearchParams(window.location.search);
 const videoId = params.get("id");
 let clickX, clickY;
 
+
+//async function loadComments() {
+    
+//}
+
 async function loadVideo() {
     try {
         const token = localStorage.getItem("jwt");
@@ -171,6 +176,46 @@ async function loadVideo() {
     } catch (err) {
         console.log(err);
     }
+
+//    loadComments();
+    
 }
+
+
+
+
+document.getElementById("comSub").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const token = localStorage.getItem("jwt");
+    const comment = document.getElementById("commentArea").value;
+
+    try {
+        const response = await fetch(`api/submitComment.php?id=${videoId}`, {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                comment: comment
+            })
+        });
+
+        const data = await response.json();
+        const resultDiv = document.getElementById("commentsMade");
+        
+        if(data.success) {
+            document.getElementById("commentArea").value = "";
+            resultDiv.textContent = data.message;
+        } else {
+            document.getElementById("commentArea").value = "";
+            resultDiv.textContent = data.message;
+        }
+
+    } catch (err) {
+        console.log(err);
+    }
+});
 
 loadVideo();
