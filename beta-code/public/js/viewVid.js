@@ -3,9 +3,44 @@ const videoId = params.get("id");
 let clickX, clickY;
 
 
-//async function loadComments() {
-    
-//}
+async function loadComments() {
+    try {
+        const token = localStorage.getItem("jwt");
+        const response = await fetch(`api/loadComments.php?id=${videoId}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+        
+        const data = await response.json();
+        const resultDiv = document.getElementById("commentsMade");
+        resultDiv.innerHTML = "";
+        
+        if (data.success && data.commentTexts.length > 0) {
+            for (let i = 0; i < data.commentTexts.length; i++) {
+                const username = data.usernames[i];
+                const role = data.roles[i];
+                const comment = data.commentTexts[i];
+
+                const commentDiv = document.createElement("div");
+                commentDiv.classList.add("comment");
+
+                commentDiv.innerHTML = `
+                    <h1>${username} ${role ? `<span class="role">(${role})</span>` : ""}</h1>
+                    <p>${comment}</p>
+                `;
+
+                resultDiv.appendChild(commentDiv);
+            }
+        } else {
+            resultDiv.innerHTML = `<h1>No comments yet.</h1>`;
+        }
+
+    } catch (err) {
+        console.error(err);
+    }
+}
 
 async function loadVideo() {
     try {
@@ -176,12 +211,9 @@ async function loadVideo() {
     } catch (err) {
         console.log(err);
     }
-
-//    loadComments();
+    loadComments();
     
 }
-
-
 
 
 document.getElementById("comSub").addEventListener("submit", async function (e) {
