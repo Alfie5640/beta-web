@@ -79,9 +79,15 @@ function renderVideos(videos) {
             favButton.onclick = () => addToFavorites(video.id, favButton);
         }
         
+        const delButton = document.createElement("button");
+        delButton.textContent = "🗑️";
+        delButton.classList.add("delete_button");
+        delButton.onclick = () => deleteVideo(video.id)
+        
         wrapper.appendChild(titleEl);
         wrapper.appendChild(videoEl);
         wrapper.appendChild(favButton);
+        wrapper.appendChild(delButton);
         libraryDiv.appendChild(wrapper);
     });
 }
@@ -142,6 +148,32 @@ async function unfavoriteVid(videoId, button) {
         
     } catch (err) {
         console.error("Error adding favorite:", err);
+    }
+}
+
+async function deleteVideo(videoId) {
+    try {
+        const token = localStorage.getItem("jwt");
+        const response = await fetch("api/deleteVid.php", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            
+            body: JSON.stringify({
+                videoId: videoId
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            
+        }
+        
+    } catch(err) {
+        console.log(err);
     }
 }
 
