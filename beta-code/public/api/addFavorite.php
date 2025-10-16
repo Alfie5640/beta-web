@@ -22,7 +22,7 @@ function addFavorite($link, &$response,  $userId, $videoId) {
         } else {
             http_response_code(201); // Created
             $response['success'] = true;
-            $response['message'] = "User registered successfully";
+            $response['message'] = "Favourite added";
             
         }
         

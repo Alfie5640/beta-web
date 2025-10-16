@@ -169,7 +169,8 @@ async function deleteVideo(videoId) {
         const data = await response.json();
         
         if (data.success) {
-            
+            allVideos = allVideos.filter(v => v.id !== videoId);
+            renderVideos(allVideos);        //Instantly delete video and re-render 
         }
         
     } catch(err) {

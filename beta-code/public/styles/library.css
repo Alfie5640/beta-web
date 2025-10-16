@@ -127,3 +127,8 @@ body {height: 70%;}
     border-radius: 8px;
     color: white;
 }
+
+.delete_button:hover {
+    cursor: pointer;
+    background-color: #E11584;
+}
