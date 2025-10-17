@@ -128,8 +128,24 @@ async function loadVideo() {
                     label.style.fontSize = "10px";
                     label.style.pointerEvents = "none";
                     label.style.zIndex = "20";
+                    
+                    const labelDelButton = document.createElement("button");
+                    labelDelButton.textContent="x";
+                    labelDelButton.textDecoration = "underline";
+                    labelDelButton.style.position = "absolute";
+                    labelDelButton.style.left = `${(labelData.xPos[i]+0.1) * 100}%`;
+                    labelDelButton.style.top = `${labelData.yPos[i] * 100}%`;
+                    labelDelButton.style.transform = "translate(-50%, -50%)";
+                    labelDelButton.style.zIndex = "20";
+                    labelDelButton.style.background = color;
+                    labelDelButton.style.color = "white";
+                    labelDelButton.style.pointerEvents = "auto";
+                    labelDelButton.style.cursor = "pointer";
+                    labelDelButton.onclick = () => deleteLabel(labelData.labelId[i], label, labelDelButton);
+
 
                     labelContainer.appendChild(label);
+                    labelContainer.appendChild(labelDelButton);
                 }
             }
 
@@ -213,6 +229,33 @@ async function loadVideo() {
     }
     loadComments();
     
+}
+
+
+async function deleteLabel(labelId, label, labelDelButton) {
+    try {
+        const token = localStorage.getItem("jwt");
+        const response = await fetch("api/deleteLabel.php", {
+            method: "POST",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-type": "application/json"
+            },
+            body: JSON.stringify({
+                labelId: labelId
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+            label.remove();
+            labelDelButton.remove();
+        }
+        
+    } catch(err) {
+        console.log(err);
+    }
 }
 
 

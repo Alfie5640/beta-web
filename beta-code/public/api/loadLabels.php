@@ -5,7 +5,7 @@ include('../dbConnect.php');
 
 
 function retrieveDetails($link, &$response, $vidId) {
-    $stmt = mysqli_prepare($link, "SELECT label_text, xPosition, yPosition, label_time FROM Labels WHERE videoId = ?");
+    $stmt = mysqli_prepare($link, "SELECT label_text, xPosition, yPosition, label_time, labelId FROM Labels WHERE videoId = ?");
     
     if($stmt === false) {
         http_response_code(500);
@@ -16,24 +16,27 @@ function retrieveDetails($link, &$response, $vidId) {
     
     mysqli_stmt_bind_param($stmt, 'i', $vidId);
     mysqli_stmt_execute($stmt);
-    mysqli_stmt_bind_result($stmt, $text, $xPos, $yPos, $time);
+    mysqli_stmt_bind_result($stmt, $text, $xPos, $yPos, $time, $labelId);
         
     $texts = [];
     $xPositions = [];
     $yPositions = [];
     $times = [];
+    $ids = [];
     
     while (mysqli_stmt_fetch($stmt)) {
         $texts[] = $text;
         $xPositions[] = $xPos;
         $yPositions[] = $yPos;
         $times[] = $time;
+        $ids[] = $labelId;
     }
     
     $response["labelText"] = $texts;
     $response["xPos"] = $xPositions;
     $response["yPos"] = $yPositions;
     $response["time"] = $times;
+    $response["labelId"] = $ids;
     
     $response["success"] = true;
         
@@ -50,7 +53,7 @@ header('Content-Type: application/json'); // Always return JSON
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET');
 
-$response = ['success' => false, 'message' => '', 'labelText' => [], 'xPos' => [], 'yPos' => [], 'time' => []];
+$response = ['success' => false, 'message' => '', 'labelText' => [], 'xPos' => [], 'yPos' => [], 'time' => [], 'labelId' => []];
 
 $headers = getallheaders();
 $token = null;
