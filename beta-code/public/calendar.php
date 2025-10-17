@@ -77,7 +77,7 @@
                 <label>Title:</label>
                 <input type="text" id="eventTitle" placeholder="Event title">
             </div>
-            <button id="saveEvent">Save</button>
+            <button id="saveEvent" onclick="submitEvent()">Save</button>
         </div>
     </div>
 
