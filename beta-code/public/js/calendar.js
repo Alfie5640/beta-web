@@ -7,6 +7,45 @@ function showEventForm() {
     }
 }
 
+async function loadEvents() {
+    try {
+        const token = localStorage.getItem("jwt");
+
+        const response = await fetch("api/loadEvents.php", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await response.json();
+        const maincontent = document.querySelector(".maincontent");
+
+        if (data.success && data.title.length > 0) {
+
+            for (let i = 0; i < data.title.length; i++) {
+                const title = data.title[i];
+                const start = data.startTime[i];
+                const end = data.endTime[i];
+                const date = data.eventDate[i];
+
+                const eventDiv = document.createElement("div");
+                eventDiv.classList.add("calendarElement", "eventItem");
+                eventDiv.innerHTML = `
+                    <h1>${title}</h1> <br>
+                    <p>Date: ${date}</p>
+                    <p>Time: ${start} - ${end}</p>
+                `;
+
+                maincontent.appendChild(eventDiv);
+            }
+        } 
+    } catch (err) {
+        console.error("Error loading events:", err);
+    }
+}
+
 async function submitEvent() {
     try {
         const token = localStorage.getItem("jwt");
@@ -43,3 +82,5 @@ async function submitEvent() {
         console.log(err);
     }
 }
+
+loadEvents();

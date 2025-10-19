@@ -13,7 +13,6 @@ async function loadVideos() {
         
         const data = await response.json();
         
-        //Output data returned
         const libraryDiv = document.getElementById("videoLibrary");
         
         
@@ -58,7 +57,7 @@ function renderVideos(videos) {
 
         const titleEl = document.createElement("h3");
         const link = document.createElement("a");
-        link.href = `video.php?id=${video.id}`; //Passes the id of the selected video in the URL
+        link.href = `video.php?id=${video.id}`;
         link.textContent = video.title;
         titleEl.appendChild(link);
         
