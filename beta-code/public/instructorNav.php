@@ -30,6 +30,7 @@
 <body>
     <script src=""></script>
     <ul>
+        <li onclick="window.location.href='createSession.php'">Create Session</li>
         <li onclick="window.location.href='search.php'">Search</li>
         <li onclick="window.location.href='studentList.php'">Student List</li>
         <li onclick="window.location.href='addStudent.php'">Add Student</li>
