@@ -28,7 +28,7 @@ Gives additional information to the end user and developer when an error occurs 
 
 - Contributed to my Learning of version control using git / github
 
-- NOTE that in this porject my api endpoints are based on actions, whereas In the future, they will be revolving around resources.
+- NOTE that in this project my api endpoints are based on actions, whereas In the future, they will be revolving around resources.
 
 
 ## Structure
@@ -37,6 +37,5 @@ Gives additional information to the end user and developer when an error occurs 
 - `js/` - JavaScript logic
 - `php/` - PHP backend scripts
 - `api` - PHP scripts grouped on resources
-- `python/` - Background Python scripts
 - `sql/` - MySQL schema
 - `docs/` - Gantt charts, wireframes, use case diagrams, etc.
