@@ -28,6 +28,8 @@ Gives additional information to the end user and developer when an error occurs 
 
 - Contributed to my Learning of version control using git / github
 
+- NOTE that in this porject my api endpoints are based on actions, whereas In the future, they will be revolving around resources.
+
 
 ## Structure
 
